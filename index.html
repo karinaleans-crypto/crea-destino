@@ -7,8 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>Crea-Destino - Juego de Ideas</title>
-    <!-- Enlace al archivo manifest.json físico -->
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="manifest.json" />
     <style>
         /* ========== ESTILOS GENERALES ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -121,7 +120,6 @@
         .btn-modal-secundario { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
         .btn-modal-secundario:active { background: rgba(255,255,255,0.2); }
 
-        /* Instalación PWA */
         .install-banner { display: none; background: rgba(255,215,0,0.15); border: 1px solid rgba(255,215,0,0.3); border-radius: 12px; padding: 10px 15px; margin-bottom: 12px; color: #ffd700; font-size: 0.85rem; align-items: center; justify-content: space-between; gap: 10px; }
         .install-banner.show { display: flex; }
         .install-banner .btn-install { background: #ffd700; border: none; border-radius: 20px; padding: 6px 18px; color: #1a1a3e; font-weight: bold; cursor: pointer; font-size: 0.8rem; touch-action: manipulation; }
@@ -309,7 +307,7 @@
             gain.connect(audioCtx.destination);
             osc.start();
             osc.stop(audioCtx.currentTime + duration);
-        } catch(e) { /* Ignorar errores de audio en navegadores restringidos */ }
+        } catch(e) { /* Ignorar errores de audio */ }
     }
 
     function playDiceSound() {
@@ -349,11 +347,6 @@
             }, i * 100);
         });
         if (navigator.vibrate) navigator.vibrate([50, 100, 50, 100, 50]);
-    }
-
-    function playErrorSound() {
-        playTone(300, 0.3, 'sawtooth', 0.1);
-        if (navigator.vibrate) navigator.vibrate(50);
     }
 
     // ================================================================
@@ -832,6 +825,21 @@
     function cerrarModalInstrucciones() { document.getElementById('modalInstrucciones').classList.remove('active'); }
 
     // ================================================================
+    //                      REGISTRO DEL SERVICE WORKER
+    // ================================================================
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then(registration => {
+                    console.log('✅ Service Worker registrado con éxito:', registration);
+                })
+                .catch(error => {
+                    console.log('❌ Error al registrar Service Worker:', error);
+                });
+        });
+    }
+
+    // ================================================================
     //                      PWA: INSTALACIÓN
     // ================================================================
     let deferredPrompt = null;
@@ -858,19 +866,6 @@
     });
 
     // ================================================================
-    //                      REGISTRO DEL SERVICE WORKER
-    // ================================================================
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js')
-            .then(registration => {
-                console.log('✅ Service Worker registrado exitosamente');
-            })
-            .catch(error => {
-                console.log('❌ Error al registrar Service Worker:', error);
-            });
-    }
-
-    // ================================================================
     //                      INICIALIZACIÓN
     // ================================================================
     document.addEventListener('keydown', (e) => {
@@ -881,11 +876,9 @@
 
     window.addEventListener('resize', () => renderizarTablero());
 
-    // Inicializar audio al primer clic del usuario
     document.addEventListener('click', () => initAudio(), { once: true });
 
-    console.log('🎮 Crea-Destino v2.0 con sonidos y PWA');
-    console.log('📱 Instala la app desde el banner de instalación o desde PWABuilder');
+    console.log('🎮 Crea-Destino v2.0 con sonidos, PWA y Service Worker');
 </script>
 </body>
 </html>

@@ -2,9 +2,7 @@ const CACHE_NAME = 'crea-destino-v1';
 const urlsToCache = [
   '.',
   'index.html',
-  'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f3a8.png',
-  'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/192x192/1f3a8.png',
-  'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/512x512/1f3a8.png'
+  'manifest.json'
 ];
 
 // Instalación del Service Worker
