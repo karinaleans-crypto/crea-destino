@@ -2,75 +2,78 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Crea-Destino - El Juego de las Ideas Transformadoras</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f0c29" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Crea-Destino - Juego de Ideas</title>
+    <!-- Enlace al archivo manifest.json físico -->
+    <link rel="manifest" href="manifest.json">
     <style>
-        /* ========== ESTILOS GENERALES (igual que antes) ========== */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .game-container { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-radius: 30px; padding: 30px; max-width: 1200px; width: 100%; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+        /* ========== ESTILOS GENERALES ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 10px; touch-action: manipulation; }
+        .game-container { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 30px; padding: 20px; max-width: 1200px; width: 100%; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
 
         /* ========== PANTALLA DE INICIO ========== */
-        #inicio { text-align: center; padding: 40px 20px; }
-        #inicio h1 { font-size: 4rem; background: linear-gradient(45deg, #f7971e, #ffd200); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(255,215,0,0.3); margin-bottom: 10px; }
-        #inicio .subtitle { color: #c8c8e8; font-size: 1.3rem; margin-bottom: 30px; letter-spacing: 2px; }
-        #inicio .instrucciones { background: rgba(255,255,255,0.08); border-radius: 20px; padding: 25px; max-width: 600px; margin: 0 auto 30px; text-align: left; color: #d0d0f0; line-height: 1.8; }
-        #inicio .instrucciones h3 { color: #ffd700; margin-bottom: 15px; text-align: center; font-size: 1.4rem; }
+        #inicio { text-align: center; padding: 30px 10px; }
+        #inicio h1 { font-size: 3.5rem; background: linear-gradient(45deg, #f7971e, #ffd200); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(255,215,0,0.3); margin-bottom: 10px; }
+        #inicio .subtitle { color: #c8c8e8; font-size: 1.1rem; margin-bottom: 25px; letter-spacing: 2px; }
+        #inicio .instrucciones { background: rgba(255,255,255,0.08); border-radius: 20px; padding: 20px; max-width: 600px; margin: 0 auto 25px; text-align: left; color: #d0d0f0; line-height: 1.8; }
+        #inicio .instrucciones h3 { color: #ffd700; margin-bottom: 10px; text-align: center; font-size: 1.2rem; }
         #inicio .instrucciones ul { list-style: none; padding: 0; }
-        #inicio .instrucciones ul li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        #inicio .instrucciones ul li { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
         #inicio .instrucciones ul li::before { content: "🎯 "; }
-        .btn-start { background: linear-gradient(45deg, #f7971e, #ffd200); border: none; padding: 18px 60px; font-size: 1.5rem; font-weight: bold; color: #1a1a3e; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 25px rgba(255,215,0,0.3); }
-        .btn-start:hover { transform: scale(1.05); box-shadow: 0 12px 35px rgba(255,215,0,0.5); }
+        .btn-start { background: linear-gradient(45deg, #f7971e, #ffd200); border: none; padding: 16px 50px; font-size: 1.4rem; font-weight: bold; color: #1a1a3e; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 25px rgba(255,215,0,0.3); width: 100%; max-width: 300px; touch-action: manipulation; }
+        .btn-start:active { transform: scale(0.95); }
 
         /* ========== CONFIGURACIÓN ========== */
-        #configuracion { display: none; padding: 20px; }
-        #configuracion h2 { color: #ffd700; text-align: center; font-size: 2rem; margin-bottom: 20px; }
-        .config-row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 25px; }
-        .config-group { background: rgba(255,255,255,0.05); border-radius: 15px; padding: 15px 20px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+        #configuracion { display: none; padding: 15px; }
+        #configuracion h2 { color: #ffd700; text-align: center; font-size: 1.8rem; margin-bottom: 15px; }
+        .config-row { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-bottom: 20px; }
+        .config-group { background: rgba(255,255,255,0.05); border-radius: 15px; padding: 12px 18px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .config-group label { color: #c8c8e8; font-weight: bold; }
         .config-group select { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 8px 15px; color: white; font-size: 1rem; cursor: pointer; }
-        .config-group select option { background: #1a1a3e; color: white; }
-        .nombres-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 800px; margin: 20px auto; }
-        .nombre-item { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 12px 15px; display: flex; align-items: center; gap: 10px; }
-        .nombre-item .color-muestra { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); flex-shrink: 0; }
-        .nombre-item input { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 8px 12px; color: white; font-size: 1rem; width: 100%; transition: all 0.3s; }
+        .nombres-container { display: grid; grid-template-columns: 1fr; gap: 12px; max-width: 500px; margin: 15px auto; }
+        .nombre-item { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; }
+        .nombre-item .color-muestra { width: 24px; height: 24px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); flex-shrink: 0; }
+        .nombre-item input { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 12px; color: white; font-size: 1rem; width: 100%; transition: all 0.3s; }
         .nombre-item input:focus { outline: none; border-color: #ffd700; background: rgba(255,255,255,0.12); }
-        .nombre-item input::placeholder { color: #888; font-style: italic; }
-        .btn-iniciar { background: linear-gradient(45deg, #00b894, #00cec9); border: none; padding: 15px 50px; font-size: 1.3rem; font-weight: bold; color: white; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 25px rgba(0,206,201,0.3); display: block; margin: 25px auto 0; }
-        .btn-iniciar:hover { transform: scale(1.05); box-shadow: 0 12px 35px rgba(0,206,201,0.5); }
-        .btn-volver { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 10px 25px; border-radius: 50px; color: #aaa; cursor: pointer; transition: all 0.3s; font-size: 0.9rem; }
-        .btn-volver:hover { background: rgba(255,255,255,0.15); color: white; }
+        .btn-iniciar { background: linear-gradient(45deg, #00b894, #00cec9); border: none; padding: 14px 40px; font-size: 1.2rem; font-weight: bold; color: white; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 25px rgba(0,206,201,0.3); display: block; margin: 20px auto 0; width: 100%; max-width: 280px; touch-action: manipulation; }
+        .btn-iniciar:active { transform: scale(0.95); }
+        .btn-volver { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 10px 20px; border-radius: 50px; color: #aaa; cursor: pointer; transition: all 0.3s; font-size: 0.9rem; touch-action: manipulation; }
 
-        /* ========== PANTALLA DE JUEGO ========== */
+        /* ========== JUEGO ========== */
         #juego { display: none; }
-        .game-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid rgba(255,255,255,0.1); }
-        .game-title { color: #ffd700; font-size: 1.8rem; font-weight: bold; }
-        .game-controls { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
-        .btn-dado { background: linear-gradient(135deg, #667eea, #764ba2); border: none; padding: 12px 25px; border-radius: 50px; color: white; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 10px; }
-        .btn-dado:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(102,126,234,0.4); }
+        .game-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; padding-bottom: 12px; border-bottom: 2px solid rgba(255,255,255,0.1); }
+        .game-title { color: #ffd700; font-size: 1.4rem; font-weight: bold; }
+        .game-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        .btn-dado { background: linear-gradient(135deg, #667eea, #764ba2); border: none; padding: 10px 20px; border-radius: 50px; color: white; font-weight: bold; font-size: 1rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px; touch-action: manipulation; min-height: 48px; }
+        .btn-dado:active { transform: scale(0.95); }
         .btn-dado:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .dado-resultado { background: rgba(255,255,255,0.15); border-radius: 15px; padding: 10px 25px; font-size: 2.5rem; font-weight: bold; color: #ffd700; min-width: 60px; text-align: center; }
+        .dado-resultado { background: rgba(255,255,255,0.15); border-radius: 15px; padding: 8px 18px; font-size: 2rem; font-weight: bold; color: #ffd700; min-width: 50px; text-align: center; }
 
-        /* ========== TAGS DE JUGADORES (MEJORADOS CON PUNTOS) ========== */
-        .players-panel { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
-        .player-tag { padding: 8px 18px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); border: 2px solid transparent; color: white; }
+        /* Tags jugadores */
+        .players-panel { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+        .player-tag { padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); border: 2px solid transparent; color: white; touch-action: manipulation; }
         .player-tag.active { border-color: #ffd700; box-shadow: 0 0 20px rgba(255,215,0,0.3); }
-        .player-tag .color-dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; border: 1px solid rgba(255,255,255,0.3); }
-        .player-tag .puntos-tag { background: rgba(0,0,0,0.3); border-radius: 12px; padding: 0 10px; font-size: 0.8rem; color: #ffd700; }
+        .player-tag .color-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; border: 1px solid rgba(255,255,255,0.3); flex-shrink: 0; }
+        .player-tag .puntos-tag { background: rgba(0,0,0,0.3); border-radius: 12px; padding: 0 8px; font-size: 0.7rem; color: #ffd700; }
+        .player-tag .pos-tag { border-radius: 50%; padding: 0 6px; font-size: 0.6rem; color: #fff; }
 
-        /* ========== TABLERO ========== */
-        .game-main { display: flex; gap: 25px; flex-wrap: wrap; }
-        .tablero { flex: 2; min-width: 350px; background: rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; position: relative; }
-        .tablero-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; }
-        .casilla { aspect-ratio: 1/1; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 0.65rem; font-weight: bold; color: white; cursor: pointer; transition: all 0.3s; position: relative; text-align: center; padding: 2px; min-height: 50px; }
-        .casilla .numero { font-size: 0.7rem; opacity: 0.7; }
-        .casilla .icono { font-size: 1.2rem; }
-        .casilla .label { font-size: 0.5rem; opacity: 0.8; line-height: 1.1; }
-        .casilla:hover { transform: scale(1.05); z-index: 10; box-shadow: 0 0 25px rgba(255,255,255,0.2); }
-        .casilla .fichas-container { position: absolute; bottom: -5px; right: -5px; display: flex; gap: 2px; flex-wrap: wrap; justify-content: flex-end; max-width: 80%; }
-        .casilla .ficha-mini { width: 16px; height: 16px; border-radius: 50%; border: 2px solid white; font-size: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        /* Tablero */
+        .game-main { display: flex; gap: 15px; flex-wrap: wrap; }
+        .tablero { flex: 2; min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 16px; padding: 12px; }
+        .tablero-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
+        .casilla { aspect-ratio: 1/1; border-radius: 6px; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 0.55rem; font-weight: bold; color: white; cursor: pointer; transition: all 0.2s; position: relative; text-align: center; padding: 2px; min-height: 38px; touch-action: manipulation; }
+        .casilla .numero { font-size: 0.6rem; opacity: 0.6; }
+        .casilla .icono { font-size: 1rem; }
+        .casilla .label { display: none; }
+        .casilla:active { transform: scale(0.92); }
+        .casilla .fichas-container { position: absolute; bottom: -4px; right: -4px; display: flex; gap: 2px; flex-wrap: wrap; justify-content: flex-end; max-width: 80%; }
+        .casilla .ficha-mini { width: 14px; height: 14px; border-radius: 50%; border: 2px solid white; font-size: 0.4rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
 
-        /* Colores de categorías */
+        /* Colores categorías */
         .categoria-verde   { background: #2e7d32; }
         .categoria-azul    { background: #1565c0; }
         .categoria-amarillo{ background: #f9a825; }
@@ -81,68 +84,70 @@
         .categoria-meta    { background: linear-gradient(135deg, #00e676, #00c853); }
         .categoria-salida  { background: linear-gradient(135deg, #00bcd4, #0097a7); }
 
-        /* ========== PANEL LATERAL ========== */
-        .panel-lateral { flex: 1; min-width: 280px; display: flex; flex-direction: column; gap: 15px; }
-        .reto-actual { background: rgba(255,255,255,0.08); border-radius: 20px; padding: 20px; min-height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; transition: all 0.5s; }
-        .reto-actual .reto-categoria { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #aaa; margin-bottom: 5px; }
-        .reto-actual .reto-titulo { font-size: 1.5rem; font-weight: bold; color: #ffd700; margin-bottom: 10px; }
-        .reto-actual .reto-texto { color: #e0e0ff; font-size: 1.1rem; line-height: 1.6; }
+        /* Panel lateral */
+        .panel-lateral { flex: 1; min-width: 230px; display: flex; flex-direction: column; gap: 12px; }
+        .reto-actual { background: rgba(255,255,255,0.08); border-radius: 16px; padding: 16px; min-height: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .reto-actual .reto-categoria { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: #aaa; }
+        .reto-actual .reto-titulo { font-size: 1.2rem; font-weight: bold; color: #ffd700; margin: 5px 0; }
+        .reto-actual .reto-texto { color: #e0e0ff; font-size: 0.95rem; line-height: 1.5; }
 
-        /* ========== MARCADOR MEJORADO ========== */
-        .marcador { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 15px 20px; }
-        .marcador h3 { color: #ffd700; margin-bottom: 10px; font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; display: flex; justify-content: space-between; align-items: center; }
-        .marcador h3 .total-puntos { font-size: 0.8rem; color: #aaa; }
+        /* Marcador */
+        .marcador { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 12px 15px; }
+        .marcador h3 { color: #ffd700; margin-bottom: 8px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; display: flex; justify-content: space-between; align-items: center; }
+        .marcador h3 .total-puntos { font-size: 0.7rem; color: #aaa; }
         .marcador table { width: 100%; border-collapse: collapse; }
-        .marcador th { color: #888; font-weight: normal; font-size: 0.7rem; text-transform: uppercase; padding: 5px 3px; text-align: left; }
-        .marcador td { color: #e0e0ff; padding: 6px 3px; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .marcador th { color: #888; font-weight: normal; font-size: 0.6rem; text-transform: uppercase; padding: 4px 2px; text-align: left; }
+        .marcador td { color: #e0e0ff; padding: 5px 2px; font-size: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .marcador .puntos { font-weight: bold; color: #ffd700; text-align: right; }
-        .marcador .posicion { text-align: center; color: #888; font-size: 0.7rem; }
+        .marcador .posicion { text-align: center; color: #888; font-size: 0.65rem; }
 
-        .btn-menu { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 20px; color: #aaa; cursor: pointer; transition: all 0.3s; font-size: 0.9rem; }
-        .btn-menu:hover { background: rgba(255,255,255,0.15); color: white; }
+        .btn-menu { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 8px 16px; color: #aaa; cursor: pointer; transition: all 0.3s; font-size: 0.8rem; touch-action: manipulation; min-height: 40px; }
+        .btn-menu:active { background: rgba(255,255,255,0.2); }
 
-        /* ========== MODALES ========== */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: center; }
+        /* Modales */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
         .modal-overlay.active { display: flex; }
-        .modal { background: linear-gradient(135deg, #1a1a3e, #2d2b6e); border-radius: 30px; padding: 40px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; border: 1px solid rgba(255,215,0,0.2); box-shadow: 0 30px 60px rgba(0,0,0,0.8); animation: modalIn 0.3s ease; }
+        .modal { background: linear-gradient(135deg, #1a1a3e, #2d2b6e); border-radius: 28px; padding: 30px 25px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; border: 1px solid rgba(255,215,0,0.2); box-shadow: 0 30px 60px rgba(0,0,0,0.8); animation: modalIn 0.3s ease; }
         @keyframes modalIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .modal .modal-titulo { font-size: 1.8rem; font-weight: bold; color: #ffd700; margin-bottom: 15px; text-align: center; }
-        .modal .modal-categoria { text-align: center; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: #aaa; margin-bottom: 5px; }
-        .modal .modal-texto { color: #e0e0ff; font-size: 1.2rem; line-height: 1.8; text-align: center; padding: 20px 0; }
-        .modal .modal-tiempo { text-align: center; color: #ff6b6b; font-weight: bold; font-size: 1.1rem; }
-        .modal .modal-puntos { text-align: center; color: #69db7c; margin: 10px 0 20px; }
-        .modal .modal-botones { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-        .modal .btn-modal { padding: 12px 30px; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; transition: all 0.3s; font-size: 1rem; }
+        .modal .modal-titulo { font-size: 1.6rem; font-weight: bold; color: #ffd700; margin-bottom: 12px; text-align: center; }
+        .modal .modal-categoria { text-align: center; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #aaa; }
+        .modal .modal-texto { color: #e0e0ff; font-size: 1.1rem; line-height: 1.7; text-align: center; padding: 15px 0; }
+        .modal .modal-tiempo { text-align: center; color: #ff6b6b; font-weight: bold; }
+        .modal .modal-puntos { text-align: center; color: #69db7c; margin: 8px 0 15px; }
+        .modal .modal-botones { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .modal .btn-modal { padding: 12px 28px; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; transition: all 0.3s; font-size: 1rem; touch-action: manipulation; min-height: 48px; }
         .btn-modal-primario { background: linear-gradient(45deg, #f7971e, #ffd200); color: #1a1a3e; }
-        .btn-modal-primario:hover { transform: scale(1.05); }
+        .btn-modal-primario:active { transform: scale(0.95); }
         .btn-modal-secundario { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
-        .btn-modal-secundario:hover { background: rgba(255,255,255,0.2); }
+        .btn-modal-secundario:active { background: rgba(255,255,255,0.2); }
 
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 768px) {
-            .game-container { padding: 15px; }
-            #inicio h1 { font-size: 2.5rem; }
-            .game-title { font-size: 1.3rem; }
-            .tablero-grid { gap: 4px; }
-            .casilla { font-size: 0.5rem; min-height: 35px; }
-            .casilla .icono { font-size: 0.9rem; }
-            .casilla .label { display: none; }
-            .dado-resultado { font-size: 1.8rem; padding: 5px 15px; min-width: 40px; }
-            .panel-lateral { min-width: unset; width: 100%; }
-            .modal { padding: 25px; }
-            .modal .modal-texto { font-size: 1rem; }
-            .nombres-container { grid-template-columns: 1fr; }
+        /* Instalación PWA */
+        .install-banner { display: none; background: rgba(255,215,0,0.15); border: 1px solid rgba(255,215,0,0.3); border-radius: 12px; padding: 10px 15px; margin-bottom: 12px; color: #ffd700; font-size: 0.85rem; align-items: center; justify-content: space-between; gap: 10px; }
+        .install-banner.show { display: flex; }
+        .install-banner .btn-install { background: #ffd700; border: none; border-radius: 20px; padding: 6px 18px; color: #1a1a3e; font-weight: bold; cursor: pointer; font-size: 0.8rem; touch-action: manipulation; }
+
+        /* Responsive */
+        @media (min-width: 600px) {
+            .nombres-container { grid-template-columns: 1fr 1fr; }
+            .casilla .label { display: block; font-size: 0.45rem; opacity: 0.7; line-height: 1; }
+            .casilla { font-size: 0.6rem; min-height: 45px; }
         }
         @media (max-width: 480px) {
-            .game-container { padding: 10px; }
+            .game-container { padding: 12px; border-radius: 20px; }
+            #inicio h1 { font-size: 2.5rem; }
+            .game-title { font-size: 1.1rem; }
             .tablero-grid { gap: 3px; }
-            .casilla { min-height: 28px; border-radius: 4px; }
+            .casilla { min-height: 32px; border-radius: 4px; }
             .casilla .numero { font-size: 0.5rem; }
-            .casilla .icono { font-size: 0.7rem; }
-            .btn-dado { padding: 8px 15px; font-size: 0.9rem; }
-            .game-controls { gap: 8px; }
+            .casilla .icono { font-size: 0.8rem; }
+            .dado-resultado { font-size: 1.6rem; padding: 4px 12px; min-width: 40px; }
+            .btn-dado { padding: 8px 14px; font-size: 0.85rem; min-height: 42px; }
+            .panel-lateral { min-width: unset; width: 100%; }
+            .modal { padding: 20px; }
+            .modal .modal-texto { font-size: 0.95rem; }
+            .player-tag { font-size: 0.7rem; padding: 4px 10px; }
         }
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: #ffd700; border-radius: 10px; }
     </style>
@@ -151,29 +156,35 @@
 
 <div class="game-container">
 
-    <!-- ==================== PANTALLA DE INICIO ==================== -->
+    <!-- ====== BANNER DE INSTALACIÓN (PWA) ====== -->
+    <div class="install-banner" id="installBanner">
+        <span>📲 Instalar app</span>
+        <button class="btn-install" id="btnInstall">Instalar</button>
+    </div>
+
+    <!-- ====== INICIO ====== -->
     <div id="inicio">
         <h1>🎨 CREA-DESTINO</h1>
         <p class="subtitle">El Juego de las Ideas Transformadoras</p>
         <div class="instrucciones">
             <h3>📖 ¿Cómo se juega?</h3>
             <ul>
-                <li>De <strong>2 a 6 jugadores</strong>. Cada uno elige un color.</li>
-                <li>Lanza el <strong>dado virtual</strong> y avanza tu ficha.</li>
-                <li>Al caer en una casilla, <strong>resuelve el reto creativo</strong>.</li>
-                <li>Recibe <strong>⭐ Destellos Creativos</strong> según tu respuesta.</li>
-                <li>¡Gana quien llegue primero a la <strong>META</strong> o tenga más puntos!</li>
+                <li>De <strong>2 a 6 jugadores</strong>.</li>
+                <li>Lanza el <strong>dado virtual</strong> y avanza.</li>
+                <li>Resuelve los <strong>retos creativos</strong>.</li>
+                <li>Recibe <strong>⭐ Destellos</strong> según tu respuesta.</li>
+                <li>¡Gana quien llegue a la <strong>META</strong> o tenga más puntos!</li>
             </ul>
         </div>
         <button class="btn-start" onclick="mostrarConfiguracion()">▶️ COMENZAR</button>
     </div>
 
-    <!-- ==================== PANTALLA DE CONFIGURACIÓN ==================== -->
+    <!-- ====== CONFIGURACIÓN ====== -->
     <div id="configuracion">
-        <h2>⚙️ Configurar jugadores</h2>
+        <h2>⚙️ Configurar</h2>
         <div class="config-row">
             <div class="config-group">
-                <label>👥 Número de jugadores:</label>
+                <label>👥 Jugadores:</label>
                 <select id="numJugadoresConfig" onchange="generarInputsNombres()">
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -184,65 +195,52 @@
             </div>
             <button class="btn-volver" onclick="volverInicio()">← Volver</button>
         </div>
-
         <div id="nombresContainer" class="nombres-container"></div>
-
-        <button class="btn-iniciar" onclick="iniciarJuegoConNombres()">🚀 Iniciar partida</button>
+        <button class="btn-iniciar" onclick="iniciarJuegoConNombres()">🚀 Iniciar</button>
     </div>
 
-    <!-- ==================== PANTALLA DE JUEGO ==================== -->
+    <!-- ====== JUEGO ====== -->
     <div id="juego">
-        <!-- Header -->
         <div class="game-header">
             <span class="game-title">🎨 CREA-DESTINO</span>
             <div class="game-controls">
-                <button class="btn-dado" id="btnDado" onclick="lanzarDado()">🎲 Lanzar Dado</button>
+                <button class="btn-dado" id="btnDado" onclick="lanzarDado()">🎲 Dado</button>
                 <span class="dado-resultado" id="dadoResultado">-</span>
-                <button class="btn-menu" onclick="volverInicio()">✕ Salir</button>
+                <button class="btn-menu" onclick="volverInicio()" style="font-size:0.8rem;">✕</button>
             </div>
         </div>
 
-        <!-- Tags de jugadores con puntos -->
         <div class="players-panel" id="playersPanel"></div>
 
-        <!-- Contenido principal -->
         <div class="game-main">
             <div class="tablero">
                 <div class="tablero-grid" id="tableroGrid"></div>
             </div>
             <div class="panel-lateral">
                 <div class="reto-actual" id="retoActual">
-                    <div class="reto-categoria">🎯 ESPERA TU TURNO</div>
+                    <div class="reto-categoria">🎯 ESPERA</div>
                     <div class="reto-titulo">¡Lanza el dado!</div>
-                    <div class="reto-texto">Haz clic en "Lanzar Dado" para comenzar tu turno.</div>
+                    <div class="reto-texto">Haz clic en "Dado" para comenzar.</div>
                 </div>
                 <div class="marcador">
-                    <h3>
-                        ⭐ Destellos Creativos
-                        <span class="total-puntos" id="totalPuntos">Total: 0 ⭐</span>
-                    </h3>
-                    <div id="marcadorContenido">
-                        <table>
-                            <thead><tr><th>#</th><th>Jugador</th><th style="text-align:right;">Puntos</th></tr></thead>
-                            <tbody id="marcadorBody"></tbody>
-                        </table>
-                    </div>
+                    <h3>⭐ Destellos <span class="total-puntos" id="totalPuntos">Total: 0</span></h3>
+                    <div><table><thead><tr><th>#</th><th>Jugador</th><th style="text-align:right;">Pts</th></tr></thead>
+                    <tbody id="marcadorBody"></tbody></table></div>
                 </div>
-                <button class="btn-menu" onclick="verInstrucciones()" style="margin-top:5px;">📖 Ver instrucciones</button>
+                <button class="btn-menu" onclick="verInstrucciones()">📖 Instrucciones</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- ==================== MODALES ==================== -->
-<!-- Modal Reto -->
+<!-- ====== MODALES ====== -->
 <div class="modal-overlay" id="modalReto">
     <div class="modal">
         <div class="modal-categoria" id="modalCategoria">Categoría</div>
         <div class="modal-titulo" id="modalTitulo">¡Reto!</div>
-        <div class="modal-texto" id="modalTexto">Texto del reto</div>
-        <div class="modal-tiempo" id="modalTiempo">⏱️ Tiempo: 60 segundos</div>
-        <div class="modal-puntos" id="modalPuntos">⭐ Hasta 15 Destellos Creativos</div>
+        <div class="modal-texto" id="modalTexto">Texto</div>
+        <div class="modal-tiempo" id="modalTiempo">⏱️ 60s</div>
+        <div class="modal-puntos" id="modalPuntos">⭐ Hasta 15 pts</div>
         <div class="modal-botones">
             <button class="btn-modal btn-modal-primario" onclick="cerrarModal()">✅ ¡Listo!</button>
             <button class="btn-modal btn-modal-secundario" onclick="cerrarModal()">⏭️ Saltar</button>
@@ -250,37 +248,32 @@
     </div>
 </div>
 
-<!-- Modal Victoria -->
 <div class="modal-overlay" id="modalVictoria">
     <div class="modal">
-        <div class="modal-titulo" style="font-size:2.5rem;">🏆 ¡FELICITACIONES! 🏆</div>
-        <div id="modalGanador" style="text-align:center; color:#ffd700; font-size:1.8rem; margin:15px 0;"></div>
-        <div style="text-align:center; color:#e0e0ff; margin-bottom:20px;" id="modalPodio"></div>
-        <div style="text-align:center; color:#888; font-style:italic; margin-bottom:25px;">
+        <div class="modal-titulo" style="font-size:2.2rem;">🏆 ¡FELICITACIONES!</div>
+        <div id="modalGanador" style="text-align:center; color:#ffd700; font-size:1.6rem; margin:10px 0;"></div>
+        <div style="text-align:center; color:#e0e0ff; margin-bottom:15px;" id="modalPodio"></div>
+        <div style="text-align:center; color:#888; font-style:italic; margin-bottom:20px; font-size:0.9rem;">
             "La creatividad es la inteligencia divirtiéndose" — Einstein
         </div>
         <div class="modal-botones">
-            <button class="btn-modal btn-modal-primario" onclick="reiniciarPartida()">🔄 Jugar de nuevo</button>
-            <button class="btn-modal btn-modal-secundario" onclick="volverInicio()">🏠 Ir al inicio</button>
+            <button class="btn-modal btn-modal-primario" onclick="reiniciarPartida()">🔄 Jugar</button>
+            <button class="btn-modal btn-modal-secundario" onclick="volverInicio()">🏠 Inicio</button>
         </div>
     </div>
 </div>
 
-<!-- Modal Instrucciones -->
 <div class="modal-overlay" id="modalInstrucciones">
     <div class="modal">
         <div class="modal-titulo">📖 Instrucciones</div>
-        <div style="color:#e0e0ff; line-height:1.8; margin:15px 0;">
-            <p><strong>🎯 Objetivo:</strong> Llegar a la meta o tener más Destellos Creativos.</p>
-            <p><strong>🎲 Turnos:</strong> Lanza el dado y avanza tu ficha.</p>
-            <p><strong>🧠 Retos:</strong> Al caer en una casilla, resuelve el desafío creativo.</p>
-            <p><strong>⭐ Puntuación:</strong> Los demás jugadores otorgan puntos según la calidad de la respuesta.</p>
-            <p><strong>🏆 Victoria:</strong> El primero en llegar a la meta o el que tenga más puntos al final.</p>
-            <hr style="border-color:rgba(255,255,255,0.1); margin:15px 0;">
-            <p style="font-size:0.9rem; color:#888;">
-                <strong>Categorías:</strong> 🟢 Lluvia de ideas · 🔵 Conexiones inesperadas · 🟡 El inventor · 🟣 El cuentacuentos · 🔴 Transformación · 🟠 El crítico
-            </p>
-            <p style="font-size:0.9rem; color:#888;">⭐ Destello Creativo · 💡 Inspiración · ⏳ Reto Relámpago</p>
+        <div style="color:#e0e0ff; line-height:1.8; margin:10px 0; font-size:0.95rem;">
+            <p><strong>🎯 Objetivo:</strong> Llegar a la meta o tener más puntos.</p>
+            <p><strong>🎲 Turnos:</strong> Lanza el dado y avanza.</p>
+            <p><strong>🧠 Retos:</strong> Resuelve el desafío creativo.</p>
+            <p><strong>⭐ Puntuación:</strong> Los demás otorgan puntos (0-15).</p>
+            <p><strong>🏆 Victoria:</strong> Primero en la meta o más puntos.</p>
+            <hr style="border-color:rgba(255,255,255,0.1); margin:12px 0;">
+            <p style="font-size:0.8rem; color:#888;">🟢 Lluvia · 🔵 Conexiones · 🟡 Inventor · 🟣 Cuentacuentos · 🔴 Transformación · 🟠 Crítico</p>
         </div>
         <div class="modal-botones">
             <button class="btn-modal btn-modal-primario" onclick="cerrarModalInstrucciones()">Entendido ✅</button>
@@ -290,70 +283,134 @@
 
 <script>
     // ================================================================
+    //                  SISTEMA DE SONIDOS (Web Audio API)
+    // ================================================================
+    let audioCtx = null;
+
+    function initAudio() {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+    }
+
+    function playTone(freq, duration, type = 'sine', volume = 0.3) {
+        try {
+            initAudio();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        } catch(e) { /* Ignorar errores de audio en navegadores restringidos */ }
+    }
+
+    function playDiceSound() {
+        for (let i = 0; i < 6; i++) {
+            setTimeout(() => {
+                playTone(800 + Math.random() * 400, 0.06, 'square', 0.1);
+            }, i * 50);
+        }
+        if (navigator.vibrate) navigator.vibrate(30);
+    }
+
+    function playTurnSound() {
+        playTone(600, 0.15, 'sine', 0.2);
+        playTone(900, 0.15, 'sine', 0.2);
+        if (navigator.vibrate) navigator.vibrate(20);
+    }
+
+    function playPointSound() {
+        playTone(523, 0.12, 'sine', 0.25);
+        setTimeout(() => playTone(659, 0.12, 'sine', 0.25), 120);
+        setTimeout(() => playTone(784, 0.15, 'sine', 0.3), 240);
+        if (navigator.vibrate) navigator.vibrate(10);
+    }
+
+    function playStarSound() {
+        playTone(1000, 0.1, 'sine', 0.2);
+        setTimeout(() => playTone(1500, 0.1, 'sine', 0.2), 100);
+        setTimeout(() => playTone(2000, 0.15, 'sine', 0.25), 200);
+        if (navigator.vibrate) navigator.vibrate(15);
+    }
+
+    function playWinSound() {
+        const notes = [523, 587, 659, 784, 880, 988, 1047];
+        notes.forEach((f, i) => {
+            setTimeout(() => {
+                playTone(f, 0.15, 'sine', 0.25);
+            }, i * 100);
+        });
+        if (navigator.vibrate) navigator.vibrate([50, 100, 50, 100, 50]);
+    }
+
+    function playErrorSound() {
+        playTone(300, 0.3, 'sawtooth', 0.1);
+        if (navigator.vibrate) navigator.vibrate(50);
+    }
+
+    // ================================================================
     //                      DATOS DEL JUEGO
     // ================================================================
-
     const CATEGORIAS = {
         verde: { nombre: 'Lluvia de ideas', color: '#2e7d32', emoji: '🟢' },
         azul: { nombre: 'Conexiones inesperadas', color: '#1565c0', emoji: '🔵' },
         amarillo: { nombre: 'El inventor', color: '#f9a825', emoji: '🟡' },
         morado: { nombre: 'El cuentacuentos', color: '#6a1b9a', emoji: '🟣' },
         rojo: { nombre: 'Transformación', color: '#c62828', emoji: '🔴' },
-        naranja: { nombre: 'El crítico', color: '#e65100', emoji: '🟠' },
-        especial: { nombre: 'Especial', color: '#ffd700', emoji: '⭐' },
-        meta: { nombre: 'META', color: '#00c853', emoji: '🏆' },
-        salida: { nombre: 'SALIDA', color: '#0097a7', emoji: '🚀' },
+        naranja: { nombre: 'El crítico', color: '#e65100', emoji: '🟠' }
     };
 
     const RETOS = {
         verde: [
             'Nombra todos los usos que se te ocurran para un clip metálico.',
-            'Dime todas las formas en que podrías transportar agua sin usar un recipiente tradicional.',
-            'Enumera todas las profesiones que podrían existir en el año 2100.',
-            'Nombra todos los objetos que puedas usar como sombrero.',
-            'Di todas las formas de reutilizar una botella plástica.'
+            'Dime formas de transportar agua sin recipiente tradicional.',
+            'Enumera profesiones que podrían existir en el año 2100.',
+            'Nombra objetos que puedas usar como sombrero.',
+            'Formas de reutilizar una botella plástica.'
         ],
         azul: [
-            'Relaciona un teléfono móvil y un árbol. ¿Qué invento podrías crear?',
-            'Combina una zapatilla deportiva y un avión. ¿Qué nueva función tendría?',
-            '¿Cómo se relaciona una manzana con una computadora? Explica tu respuesta.',
-            'Relaciona "nieve" y "computadora" en una idea creativa.',
+            'Relaciona un teléfono y un árbol. ¿Qué invento creas?',
+            'Combina zapatilla y avión. ¿Qué nueva función tendría?',
+            '¿Cómo se relaciona una manzana con una computadora?',
+            'Relaciona "nieve" y "computadora" en una idea.',
             'Relaciona "camisa" y "telescopio" en una invención.'
         ],
         amarillo: [
-            'Diseña un invento que ayude a reducir la cantidad de plástico en los océanos.',
-            '¿Cómo solucionarías el problema de la deserción escolar en tu comunidad?',
-            'Crea un dispositivo que facilite el aprendizaje de matemáticas para niños.',
-            'Inventa un aparato para organizar mejor el tiempo de estudio.',
-            'Propón una solución para reciclar los cuadernos usados de forma creativa.'
+            'Diseña un invento para reducir plástico en océanos.',
+            '¿Cómo solucionarías la deserción escolar?',
+            'Crea un dispositivo para aprender matemáticas.',
+            'Inventa un aparato para organizar el tiempo de estudio.',
+            'Solución para reciclar cuadernos usados.'
         ],
         morado: [
-            'Crea una historia que incluya: un pirata, un teléfono celular, una isla desierta y un mensaje de auxilio.',
-            'Inventa un cuento con: un niño científico, una mascota, una nave espacial y la necesidad de salvar su planeta.',
-            'Relata una historia que tenga como personaje principal: el lápiz que escribía solo en una biblioteca abandonada.',
-            'Incluye en tu historia: una goma de borrar, una estrella, un aula abandonada y un mensaje secreto.',
-            'Incluye en tu historia: un robot, un libro de cuentos, un bosque encantado y una misión.'
+            'Historia: pirata, celular, isla desierta, mensaje de auxilio.',
+            'Cuento: niño científico, mascota, nave espacial, salvar planeta.',
+            'Relato: el lápiz que escribía solo en biblioteca abandonada.',
+            'Incluye: goma, estrella, aula abandonada, mensaje secreto.',
+            'Incluye: robot, libro de cuentos, bosque encantado, misión.'
         ],
         rojo: [
-            'Transforma una botella plástica en algo útil para una clase de arte.',
-            '¿Qué harías con una silla vieja para convertirla en un objeto de juego?',
-            'Rediseña el uniforme escolar para que sea más funcional y creativo. Explica tus cambios.',
-            'Transforma una caja de cartón en un objeto útil para el colegio.',
-            'Convierte un periódico viejo en una obra de arte y explica tu proceso.'
+            'Transforma botella plástica en algo útil para arte.',
+            '¿Qué harías con una silla vieja para convertirla en juego?',
+            'Rediseña el uniforme escolar para que sea más funcional.',
+            'Transforma caja de cartón en objeto útil para el colegio.',
+            'Convierte periódico viejo en obra de arte.'
         ],
         naranja: [
-            'Analiza el teléfono inteligente y propón 3 mejoras que lo harían más innovador.',
-            'Observa una silla común y diseñala de nuevo para que sea más divertida y funcional.',
-            'Toma el cuento de Caperucita Roja y cambia el final para que sea más creativo e inesperado.',
-            'Evalúa el diseño de tu cuaderno y sugiere cambios innovadores para hacerlo más útil.',
-            'Observa un juego de mesa conocido y plantea una versión más creativa y original.'
+            'Analiza el teléfono y propón 3 mejoras innovadoras.',
+            'Diseña una silla común para que sea más divertida.',
+            'Cambia el final de Caperucita Roja para que sea creativo.',
+            'Evalúa tu cuaderno y sugiere cambios innovadores.',
+            'Plantea una versión más creativa de un juego de mesa conocido.'
         ]
-    };
-
-    const RETOS_ESPECIALES = {
-        destello: '¡Ganas automáticamente 5 Destellos Creativos! ⭐',
-        inspiracion: '¡Elige la categoría que prefieras para tu próximo reto! 💡',
-        relampago: '¡Reto Relámpago! Tienes 30 segundos para responder. Si lo logras, ¡doblas tus puntos! ⏳'
     };
 
     const CASILLAS = [
@@ -392,22 +449,17 @@
     // ================================================================
     //                      ESTADO DEL JUEGO
     // ================================================================
-
     let jugadores = [];
     let numJugadores = 4;
     let turnoActual = 0;
     let faseJuego = 'inicio';
     let juegoTerminado = false;
-    let retosUsados = {
-        verde: [], azul: [], amarillo: [], morado: [], rojo: [], naranja: []
-    };
-
+    let retosUsados = { verde: [], azul: [], amarillo: [], morado: [], rojo: [], naranja: [] };
     const COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD'];
 
     // ================================================================
-    //                      FUNCIONES DE PANTALLA
+    //                  FUNCIONES PRINCIPALES
     // ================================================================
-
     function mostrarConfiguracion() {
         document.getElementById('inicio').style.display = 'none';
         document.getElementById('configuracion').style.display = 'block';
@@ -416,7 +468,7 @@
 
     function volverInicio() {
         if (document.getElementById('juego').style.display === 'block') {
-            if (!confirm('¿Seguro que quieres salir? Se perderá el progreso.')) return;
+            if (!confirm('¿Salir? Se perderá el progreso.')) return;
         }
         document.getElementById('configuracion').style.display = 'none';
         document.getElementById('juego').style.display = 'none';
@@ -424,10 +476,6 @@
         juegoTerminado = false;
         document.getElementById('modalVictoria').classList.remove('active');
     }
-
-    // ================================================================
-    //                      CONFIGURACIÓN DE NOMBRES
-    // ================================================================
 
     function generarInputsNombres() {
         const num = parseInt(document.getElementById('numJugadoresConfig').value);
@@ -446,14 +494,9 @@
         numJugadores = num;
     }
 
-    // ================================================================
-    //                      INICIAR JUEGO
-    // ================================================================
-
     function iniciarJuegoConNombres() {
         const nombres = [];
-        const inputs = document.querySelectorAll('#nombresContainer input');
-        inputs.forEach((inp, i) => {
+        document.querySelectorAll('#nombresContainer input').forEach((inp, i) => {
             let val = inp.value.trim();
             if (val === '') val = 'Jugador ' + (i+1);
             nombres.push(val);
@@ -462,31 +505,22 @@
         document.getElementById('configuracion').style.display = 'none';
         document.getElementById('juego').style.display = 'block';
 
-        jugadores = [];
-        for (let i = 0; i < nombres.length; i++) {
-            jugadores.push({
-                nombre: nombres[i],
-                color: COLORS[i % COLORS.length],
-                posicion: 0,
-                puntos: 0,
-                activo: i === 0,
-                ultimoDado: 0
-            });
-        }
+        jugadores = nombres.map((n, i) => ({
+            nombre: n, color: COLORS[i % COLORS.length], posicion: 0, puntos: 0, activo: i === 0, ultimoDado: 0
+        }));
 
         turnoActual = 0;
         faseJuego = 'dado';
         juegoTerminado = false;
-        retosUsados = {
-            verde: [], azul: [], amarillo: [], morado: [], rojo: [], naranja: []
-        };
+        retosUsados = { verde: [], azul: [], amarillo: [], morado: [], rojo: [], naranja: [] };
 
         renderizarTablero();
         actualizarMarcador();
         actualizarPanelJugadores();
         document.getElementById('btnDado').disabled = false;
         document.getElementById('dadoResultado').textContent = '-';
-        actualizarReto('🎯', 'Turno de ' + jugadores[0].nombre, '¡Lanza el dado para empezar!');
+        actualizarReto('🎯', 'Turno de ' + jugadores[0].nombre, '¡Lanza el dado!');
+        playTurnSound();
     }
 
     function reiniciarPartida() {
@@ -499,7 +533,6 @@
     // ================================================================
     //                      TABLERO
     // ================================================================
-
     function renderizarTablero() {
         const grid = document.getElementById('tableroGrid');
         grid.innerHTML = '';
@@ -507,35 +540,30 @@
             const div = document.createElement('div');
             div.className = 'casilla';
             div.id = 'casilla-' + index;
-
             if (casilla.tipo === 'salida') div.classList.add('categoria-salida');
             else if (casilla.tipo === 'meta') div.classList.add('categoria-meta');
             else if (casilla.tipo === 'especial') div.classList.add('categoria-especial');
             else if (casilla.categoria) div.classList.add('categoria-' + casilla.categoria);
 
-            let html = `<span class="numero">${casilla.numero}</span>`;
-            html += `<span class="icono">${casilla.icono}</span>`;
-            if (casilla.label && window.innerWidth > 480) {
-                html += `<span class="label">${casilla.label}</span>`;
-            }
+            let html = `<span class="numero">${casilla.numero}</span><span class="icono">${casilla.icono}</span>`;
+            if (casilla.label && window.innerWidth > 480) html += `<span class="label">${casilla.label}</span>`;
             html += `<div class="fichas-container" id="fichas-${index}"></div>`;
             div.innerHTML = html;
 
-            if (casilla.tipo === 'reto') {
+            if (casilla.tipo === 'reto' || casilla.tipo === 'especial') {
                 div.style.cursor = 'pointer';
-                div.onclick = () => mostrarRetoCategoria(casilla.categoria);
-            } else if (casilla.tipo === 'especial') {
-                div.style.cursor = 'pointer';
-                div.onclick = () => mostrarRetoEspecial(casilla.categoria);
+                div.onclick = () => {
+                    if (casilla.tipo === 'reto') mostrarRetoCategoria(casilla.categoria);
+                    else mostrarRetoEspecial(casilla.categoria);
+                };
             }
-
             grid.appendChild(div);
         });
         actualizarFichasTablero();
     }
 
     function actualizarFichasTablero() {
-        CASILLAS.forEach((casilla, index) => {
+        CASILLAS.forEach((_, index) => {
             const container = document.getElementById('fichas-' + index);
             if (container) {
                 let html = '';
@@ -552,21 +580,17 @@
     // ================================================================
     //                      DADO
     // ================================================================
-
     function lanzarDado() {
         if (juegoTerminado) return;
-        if (faseJuego !== 'dado' && faseJuego !== 'inicio') {
-            alert('Resuelve el reto actual antes de lanzar el dado.');
-            return;
-        }
+        if (faseJuego !== 'dado') { alert('Resuelve el reto primero.'); return; }
 
         const btn = document.getElementById('btnDado');
         btn.disabled = true;
+        playDiceSound();
 
         let count = 0;
         const interval = setInterval(() => {
-            const num = Math.floor(Math.random() * 6) + 1;
-            document.getElementById('dadoResultado').textContent = num;
+            document.getElementById('dadoResultado').textContent = Math.floor(Math.random() * 6) + 1;
             count++;
             if (count > 10) {
                 clearInterval(interval);
@@ -574,13 +598,11 @@
                 document.getElementById('dadoResultado').textContent = resultado;
                 procesarDado(resultado);
             }
-        }, 80);
+        }, 70);
     }
 
     function procesarDado(valor) {
         const jugador = jugadores[turnoActual];
-        jugador.ultimoDado = valor;
-
         let nuevaPos = jugador.posicion + valor;
         if (nuevaPos >= CASILLAS.length - 1) {
             nuevaPos = CASILLAS.length - 1;
@@ -588,25 +610,16 @@
             mostrarVictoria();
             return;
         }
-
         jugador.posicion = nuevaPos;
         actualizarFichasTablero();
 
         const casilla = CASILLAS[nuevaPos];
         faseJuego = 'reto';
 
-        if (casilla.tipo === 'reto') {
-            mostrarRetoCategoria(casilla.categoria);
-        } else if (casilla.tipo === 'especial') {
-            mostrarRetoEspecial(casilla.categoria);
-        } else if (casilla.tipo === 'meta') {
-            juegoTerminado = true;
-            mostrarVictoria();
-        } else {
-            faseJuego = 'dado';
-            avanzarTurno();
-            document.getElementById('btnDado').disabled = false;
-        }
+        if (casilla.tipo === 'reto') mostrarRetoCategoria(casilla.categoria);
+        else if (casilla.tipo === 'especial') mostrarRetoEspecial(casilla.categoria);
+        else if (casilla.tipo === 'meta') { juegoTerminado = true; mostrarVictoria(); }
+        else { faseJuego = 'dado'; avanzarTurno(); document.getElementById('btnDado').disabled = false; }
 
         actualizarMarcador();
         actualizarPanelJugadores();
@@ -615,15 +628,11 @@
     // ================================================================
     //                      RETOS
     // ================================================================
-
     function mostrarRetoCategoria(categoria) {
         const retosDisponibles = RETOS[categoria];
-        const usados = retosUsados[categoria];
-        let disponibles = retosDisponibles.filter((r, i) => !usados.includes(i));
-        if (disponibles.length === 0) {
-            retosUsados[categoria] = [];
-            disponibles = retosDisponibles;
-        }
+        let usados = retosUsados[categoria];
+        let disponibles = retosDisponibles.filter((_, i) => !usados.includes(i));
+        if (disponibles.length === 0) { retosUsados[categoria] = []; disponibles = retosDisponibles; }
         const idx = Math.floor(Math.random() * disponibles.length);
         const retoIndex = retosDisponibles.indexOf(disponibles[idx]);
         retosUsados[categoria].push(retoIndex);
@@ -632,143 +641,108 @@
         const tiempo = categoria === 'morado' ? '180' : categoria === 'amarillo' || categoria === 'naranja' ? '120' : '60';
 
         document.getElementById('modalCategoria').textContent = info.emoji + ' ' + info.nombre;
-        document.getElementById('modalTitulo').textContent = '🎯 ¡Resuelve el reto!';
+        document.getElementById('modalTitulo').textContent = '🎯 ¡Resuelve!';
         document.getElementById('modalTexto').textContent = disponibles[idx];
-        document.getElementById('modalTiempo').textContent = '⏱️ Tiempo: ' + tiempo + ' segundos';
-        document.getElementById('modalPuntos').textContent = '⭐ Hasta 15 Destellos Creativos';
-
+        document.getElementById('modalTiempo').textContent = '⏱️ ' + tiempo + 's';
+        document.getElementById('modalPuntos').textContent = '⭐ Hasta 15 puntos';
         document.getElementById('modalReto').classList.add('active');
         actualizarReto(info.emoji, info.nombre, disponibles[idx]);
+        playTurnSound();
     }
 
     function mostrarRetoEspecial(tipo) {
         const textos = {
             destello: {
-                titulo: '⭐ ¡Destello Creativo!',
-                texto: '¡Ganas automáticamente 5 Destellos Creativos!',
-                accion: () => {
-                    jugadores[turnoActual].puntos += 5;
-                    actualizarMarcador();
-                }
+                titulo: '⭐ ¡Destello!',
+                texto: '¡+5 Destellos Creativos!',
+                accion: () => { jugadores[turnoActual].puntos += 5; actualizarMarcador(); playStarSound(); }
             },
             inspiracion: {
                 titulo: '💡 ¡Inspiración!',
-                texto: 'Elige la categoría que prefieras para tu próximo reto.',
+                texto: 'Elige tu categoría favorita.',
                 accion: () => {
-                    const categorias = ['verde', 'azul', 'amarillo', 'morado', 'rojo', 'naranja'];
-                    const nombres = categorias.map(c => CATEGORIAS[c].emoji + ' ' + CATEGORIAS[c].nombre);
-                    const elegida = prompt('Elige una categoría:\n' +
-                        categorias.map((c, i) => (i + 1) + '. ' + nombres[i]).join('\n'));
+                    const cats = ['verde','azul','amarillo','morado','rojo','naranja'];
+                    const nombres = cats.map(c => CATEGORIAS[c].emoji + ' ' + CATEGORIAS[c].nombre);
+                    const elegida = prompt('Elige categoría:\n' + cats.map((c,i) => (i+1)+'. '+nombres[i]).join('\n'));
                     const idx = parseInt(elegida) - 1;
-                    if (idx >= 0 && idx < categorias.length) {
-                        mostrarRetoCategoria(categorias[idx]);
-                    } else {
-                        faseJuego = 'dado';
-                        avanzarTurno();
-                        document.getElementById('btnDado').disabled = false;
-                        actualizarReto('🎯', 'Turno de ' + jugadores[turnoActual].nombre, '¡Lanza el dado!');
-                    }
+                    if (idx >= 0 && idx < cats.length) mostrarRetoCategoria(cats[idx]);
+                    else { faseJuego = 'dado'; avanzarTurno(); document.getElementById('btnDado').disabled = false; }
                 }
             },
             relampago: {
-                titulo: '⏳ ¡Reto Relámpago!',
-                texto: 'Tienes 30 segundos para responder. Si lo logras, ¡doblas tus puntos!',
+                titulo: '⏳ ¡Relámpago!',
+                texto: '30s para doblar puntos.',
                 accion: () => {
-                    const categorias = ['verde', 'azul', 'amarillo', 'morado', 'rojo', 'naranja'];
-                    const cat = categorias[Math.floor(Math.random() * categorias.length)];
+                    const cats = ['verde','azul','amarillo','morado','rojo','naranja'];
+                    const cat = cats[Math.floor(Math.random() * cats.length)];
                     mostrarRetoCategoriaRelampago(cat);
                 }
             }
         };
-
         const info = textos[tipo];
         if (!info) return;
 
         document.getElementById('modalCategoria').textContent = '⚡ Especial';
         document.getElementById('modalTitulo').textContent = info.titulo;
         document.getElementById('modalTexto').textContent = info.texto;
-        document.getElementById('modalTiempo').textContent = '⏱️ ¡Actúa rápido!';
-        document.getElementById('modalPuntos').textContent = '⭐ ¡Puntos extra!';
-
+        document.getElementById('modalTiempo').textContent = '⏱️ ¡Actúa!';
+        document.getElementById('modalPuntos').textContent = '⭐ ¡Extra!';
         document.getElementById('modalReto').classList.add('active');
 
-        if (tipo === 'destello') {
-            info.accion();
-            setTimeout(() => cerrarModal(), 1500);
-        } else if (tipo === 'inspiracion') {
-            setTimeout(() => {
-                cerrarModal();
-                info.accion();
-            }, 500);
-        } else if (tipo === 'relampago') {
-            setTimeout(() => {
-                cerrarModal();
-                info.accion();
-            }, 500);
-        }
-
+        if (tipo === 'destello') { info.accion(); setTimeout(() => cerrarModal(), 1200); }
+        else if (tipo === 'inspiracion') { setTimeout(() => { cerrarModal(); info.accion(); }, 400); }
+        else if (tipo === 'relampago') { setTimeout(() => { cerrarModal(); info.accion(); }, 400); }
         actualizarReto('⚡', info.titulo, info.texto);
     }
 
     function mostrarRetoCategoriaRelampago(categoria) {
         const retosDisponibles = RETOS[categoria];
-        const usados = retosUsados[categoria];
-        let disponibles = retosDisponibles.filter((r, i) => !usados.includes(i));
-        if (disponibles.length === 0) {
-            retosUsados[categoria] = [];
-            disponibles = retosDisponibles;
-        }
+        let usados = retosUsados[categoria];
+        let disponibles = retosDisponibles.filter((_, i) => !usados.includes(i));
+        if (disponibles.length === 0) { retosUsados[categoria] = []; disponibles = retosDisponibles; }
         const idx = Math.floor(Math.random() * disponibles.length);
         const retoIndex = retosDisponibles.indexOf(disponibles[idx]);
         retosUsados[categoria].push(retoIndex);
-
         const info = CATEGORIAS[categoria];
 
         document.getElementById('modalCategoria').textContent = '⏳ ' + info.emoji + ' ' + info.nombre + ' (Relámpago)';
-        document.getElementById('modalTitulo').textContent = '⚡ ¡Reto Relámpago!';
+        document.getElementById('modalTitulo').textContent = '⚡ ¡Relámpago!';
         document.getElementById('modalTexto').textContent = disponibles[idx];
-        document.getElementById('modalTiempo').textContent = '⏱️ Tienes 30 segundos!';
-        document.getElementById('modalPuntos').textContent = '⭐ ¡Doblas tus puntos si respondes!';
-
+        document.getElementById('modalTiempo').textContent = '⏱️ 30 segundos!';
+        document.getElementById('modalPuntos').textContent = '⭐ ¡Doblas puntos!';
         document.getElementById('modalReto').classList.add('active');
-        actualizarReto('⏳', 'Reto Relámpago - ' + info.nombre, disponibles[idx]);
+        actualizarReto('⏳', 'Reto Relámpago', disponibles[idx]);
     }
 
     function cerrarModal() {
         document.getElementById('modalReto').classList.remove('active');
-
         const jugador = jugadores[turnoActual];
-        const puntos = prompt(
-            '¿Cuántos Destellos Creativos merece ' + jugador.nombre + '?\n' +
-            'Criterios:\n• Fluidez (1-5 pts)\n• Originalidad (0-3 pts)\n• Elaboración (0-3 pts)\n• Claridad (0-2 pts)\n• Conexión con el reto (0-2 pts)\nTotal: 15 pts',
+        const pts = prompt(
+            'Puntos para ' + jugador.nombre + ':\n' +
+            'Fluidez (1-5) | Originalidad (0-3) | Elaboración (0-3) | Claridad (0-2) | Conexión (0-2)\n' +
+            'Total máximo: 15',
             '5'
         );
-
-        const pts = parseInt(puntos);
-        if (!isNaN(pts) && pts >= 0 && pts <= 15) {
-            jugador.puntos += pts;
-        } else if (pts !== null) {
-            alert('Puntuación no válida. Se asignarán 0 puntos.');
-        }
+        const p = parseInt(pts);
+        if (!isNaN(p) && p >= 0 && p <= 15) {
+            jugador.puntos += p;
+            if (p > 0) playPointSound();
+        } else if (pts !== null) alert('Puntuación no válida (0-15)');
 
         actualizarMarcador();
         actualizarPanelJugadores();
 
-        if (jugador.posicion >= CASILLAS.length - 1) {
-            juegoTerminado = true;
-            mostrarVictoria();
-            return;
-        }
+        if (jugador.posicion >= CASILLAS.length - 1) { juegoTerminado = true; mostrarVictoria(); return; }
 
         faseJuego = 'dado';
         avanzarTurno();
         document.getElementById('btnDado').disabled = false;
         actualizarReto('🎯', 'Turno de ' + jugadores[turnoActual].nombre, '¡Lanza el dado!');
+        playTurnSound();
     }
 
     function actualizarReto(categoria, titulo, texto) {
-        const div = document.getElementById('retoActual');
-        div.innerHTML = `
+        document.getElementById('retoActual').innerHTML = `
             <div class="reto-categoria">${categoria}</div>
             <div class="reto-titulo">${titulo}</div>
             <div class="reto-texto">${texto}</div>
@@ -778,7 +752,6 @@
     // ================================================================
     //                      TURNOS
     // ================================================================
-
     function avanzarTurno() {
         if (juegoTerminado) return;
         let next = (turnoActual + 1) % jugadores.length;
@@ -789,48 +762,35 @@
             intentos++;
         }
         turnoActual = next;
-
-        let todosEnMeta = jugadores.every(j => j.posicion >= CASILLAS.length - 1);
-        if (todosEnMeta) {
+        if (jugadores.every(j => j.posicion >= CASILLAS.length - 1)) {
             juegoTerminado = true;
             mostrarVictoria();
             return;
         }
         actualizarPanelJugadores();
+        playTurnSound();
     }
 
     // ================================================================
-    //                      MARCADOR MEJORADO
+    //                      MARCADOR
     // ================================================================
-
     function actualizarMarcador() {
         const tbody = document.getElementById('marcadorBody');
         tbody.innerHTML = '';
-        // Ordenar por puntos (de mayor a menor) para mostrar ranking
         const sorted = [...jugadores].sort((a, b) => b.puntos - a.puntos);
         sorted.forEach((j, i) => {
-            const tr = document.createElement('tr');
             const medalla = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1);
+            const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td class="posicion">${medalla}</td>
-                <td style="display:flex;align-items:center;gap:8px;">
-                    <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${j.color};"></span>
-                    ${j.nombre}
-                    ${j === jugadores[turnoActual] ? ' 👈' : ''}
-                </td>
-                <td class="puntos">${j.puntos} ⭐</td>
+                <td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${j.color};"></span> ${j.nombre} ${j === jugadores[turnoActual] ? '👈' : ''}</td>
+                <td class="puntos">${j.puntos}⭐</td>
             `;
             tbody.appendChild(tr);
         });
-
-        // Actualizar total de puntos
-        const total = jugadores.reduce((sum, j) => sum + j.puntos, 0);
-        document.getElementById('totalPuntos').textContent = `Total: ${total} ⭐`;
+        const total = jugadores.reduce((s, j) => s + j.puntos, 0);
+        document.getElementById('totalPuntos').textContent = 'Total: ' + total + '⭐';
     }
-
-    // ================================================================
-    //                      PANEL DE JUGADORES (CON PUNTOS)
-    // ================================================================
 
     function actualizarPanelJugadores() {
         const panel = document.getElementById('playersPanel');
@@ -843,12 +803,8 @@
             tag.innerHTML = `
                 <span class="color-dot" style="background:${j.color};"></span>
                 ${j.nombre}
-                <span style="background:rgba(0,0,0,0.3);border-radius:12px;padding:0 8px;font-size:0.8rem;color:#ffd700;">
-                    ${j.puntos}⭐
-                </span>
-                <span style="background:${j.color};border-radius:50%;padding:0 6px;font-size:0.7rem;color:#fff;">
-                    ${j.posicion}
-                </span>
+                <span class="puntos-tag">${j.puntos}⭐</span>
+                <span class="pos-tag" style="background:${j.color};">${j.posicion}</span>
             `;
             panel.appendChild(tag);
         });
@@ -857,39 +813,66 @@
     // ================================================================
     //                      VICTORIA
     // ================================================================
-
     function mostrarVictoria() {
         const sorted = [...jugadores].sort((a, b) => b.puntos - a.puntos);
-        const ganador = sorted[0];
-
-        document.getElementById('modalGanador').textContent = '🌟 ¡' + ganador.nombre + ' es el ganador! 🌟';
-
-        let podio = '';
-        sorted.forEach((j, i) => {
-            const medalla = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '👏';
-            podio += medalla + ' ' + j.nombre + ' — ' + j.puntos + ' ⭐<br>';
-        });
-        document.getElementById('modalPodio').innerHTML = podio;
-
+        document.getElementById('modalGanador').textContent = '🌟 ¡' + sorted[0].nombre + ' gana! 🌟';
+        document.getElementById('modalPodio').innerHTML = sorted.map((j,i) =>
+            (i===0?'🥇':i===1?'🥈':i===2?'🥉':'👏') + ' ' + j.nombre + ' — ' + j.puntos + '⭐'
+        ).join('<br>');
         document.getElementById('modalVictoria').classList.add('active');
         document.getElementById('btnDado').disabled = true;
+        playWinSound();
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 200]);
     }
 
     // ================================================================
     //                      INSTRUCCIONES
     // ================================================================
+    function verInstrucciones() { document.getElementById('modalInstrucciones').classList.add('active'); }
+    function cerrarModalInstrucciones() { document.getElementById('modalInstrucciones').classList.remove('active'); }
 
-    function verInstrucciones() {
-        document.getElementById('modalInstrucciones').classList.add('active');
-    }
-    function cerrarModalInstrucciones() {
-        document.getElementById('modalInstrucciones').classList.remove('active');
+    // ================================================================
+    //                      PWA: INSTALACIÓN
+    // ================================================================
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        document.getElementById('installBanner').classList.add('show');
+    });
+
+    document.getElementById('btnInstall').addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const result = await deferredPrompt.userChoice;
+            if (result.outcome === 'accepted') {
+                document.getElementById('installBanner').classList.remove('show');
+            }
+            deferredPrompt = null;
+        }
+    });
+
+    window.addEventListener('appinstalled', () => {
+        document.getElementById('installBanner').classList.remove('show');
+        console.log('🎨 Crea-Destino instalado como app');
+    });
+
+    // ================================================================
+    //                      REGISTRO DEL SERVICE WORKER
+    // ================================================================
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+            .then(registration => {
+                console.log('✅ Service Worker registrado exitosamente');
+            })
+            .catch(error => {
+                console.log('❌ Error al registrar Service Worker:', error);
+            });
     }
 
     // ================================================================
     //                      INICIALIZACIÓN
     // ================================================================
-
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             document.querySelectorAll('.modal-overlay.active').forEach(el => el.classList.remove('active'));
@@ -898,8 +881,11 @@
 
     window.addEventListener('resize', () => renderizarTablero());
 
-    console.log('🎮 Crea-Destino cargado correctamente');
-    console.log('📚 Retos disponibles:', Object.keys(RETOS).length, 'categorías');
+    // Inicializar audio al primer clic del usuario
+    document.addEventListener('click', () => initAudio(), { once: true });
+
+    console.log('🎮 Crea-Destino v2.0 con sonidos y PWA');
+    console.log('📱 Instala la app desde el banner de instalación o desde PWABuilder');
 </script>
 </body>
 </html>
