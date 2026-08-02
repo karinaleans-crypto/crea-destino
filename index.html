@@ -5,421 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Crea-Destino - El Juego de las Ideas Transformadoras</title>
     <style>
-        /* ========== ESTILOS GENERALES ========== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .game-container {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
-            padding: 30px;
-            max-width: 1200px;
-            width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
-        }
+        /* ========== ESTILOS GENERALES (igual que antes) ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .game-container { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-radius: 30px; padding: 30px; max-width: 1200px; width: 100%; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
 
         /* ========== PANTALLA DE INICIO ========== */
-        #inicio {
-            text-align: center;
-            padding: 40px 20px;
-        }
+        #inicio { text-align: center; padding: 40px 20px; }
+        #inicio h1 { font-size: 4rem; background: linear-gradient(45deg, #f7971e, #ffd200); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(255,215,0,0.3); margin-bottom: 10px; }
+        #inicio .subtitle { color: #c8c8e8; font-size: 1.3rem; margin-bottom: 30px; letter-spacing: 2px; }
+        #inicio .instrucciones { background: rgba(255,255,255,0.08); border-radius: 20px; padding: 25px; max-width: 600px; margin: 0 auto 30px; text-align: left; color: #d0d0f0; line-height: 1.8; }
+        #inicio .instrucciones h3 { color: #ffd700; margin-bottom: 15px; text-align: center; font-size: 1.4rem; }
+        #inicio .instrucciones ul { list-style: none; padding: 0; }
+        #inicio .instrucciones ul li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        #inicio .instrucciones ul li::before { content: "🎯 "; }
+        .btn-start { background: linear-gradient(45deg, #f7971e, #ffd200); border: none; padding: 18px 60px; font-size: 1.5rem; font-weight: bold; color: #1a1a3e; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 25px rgba(255,215,0,0.3); }
+        .btn-start:hover { transform: scale(1.05); box-shadow: 0 12px 35px rgba(255,215,0,0.5); }
 
-        #inicio h1 {
-            font-size: 4rem;
-            background: linear-gradient(45deg, #f7971e, #ffd200);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-            margin-bottom: 10px;
-        }
-
-        #inicio .subtitle {
-            color: #c8c8e8;
-            font-size: 1.3rem;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-        }
-
-        #inicio .instrucciones {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 25px;
-            max-width: 600px;
-            margin: 0 auto 30px;
-            text-align: left;
-            color: #d0d0f0;
-            line-height: 1.8;
-        }
-
-        #inicio .instrucciones h3 {
-            color: #ffd700;
-            margin-bottom: 15px;
-            text-align: center;
-            font-size: 1.4rem;
-        }
-
-        #inicio .instrucciones ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        #inicio .instrucciones ul li {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        #inicio .instrucciones ul li::before {
-            content: "🎯 ";
-        }
-
-        .btn-start {
-            background: linear-gradient(45deg, #f7971e, #ffd200);
-            border: none;
-            padding: 18px 60px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #1a1a3e;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
-        }
-
-        .btn-start:hover {
-            transform: scale(1.05);
-            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.5);
-        }
-
-        /* ========== PANTALLA DE CONFIGURACIÓN ========== */
-        #configuracion {
-            display: none;
-            padding: 20px;
-        }
-
-        #configuracion h2 {
-            color: #ffd700;
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        .config-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
-
-        .config-group {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .config-group label {
-            color: #c8c8e8;
-            font-weight: bold;
-        }
-
-        .config-group select {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 8px 15px;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
-        .config-group select option {
-            background: #1a1a3e;
-            color: white;
-        }
-
-        .nombres-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            max-width: 800px;
-            margin: 20px auto;
-        }
-
-        .nombre-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 12px 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nombre-item .color-muestra {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            flex-shrink: 0;
-        }
-
-        .nombre-item input {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            padding: 8px 12px;
-            color: white;
-            font-size: 1rem;
-            width: 100%;
-            transition: all 0.3s;
-        }
-
-        .nombre-item input:focus {
-            outline: none;
-            border-color: #ffd700;
-            background: rgba(255, 255, 255, 0.12);
-        }
-
-        .nombre-item input::placeholder {
-            color: #888;
-            font-style: italic;
-        }
-
-        .btn-iniciar {
-            background: linear-gradient(45deg, #00b894, #00cec9);
-            border: none;
-            padding: 15px 50px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: white;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 8px 25px rgba(0, 206, 201, 0.3);
-            display: block;
-            margin: 25px auto 0;
-        }
-
-        .btn-iniciar:hover {
-            transform: scale(1.05);
-            box-shadow: 0 12px 35px rgba(0, 206, 201, 0.5);
-        }
-
-        .btn-volver {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 10px 25px;
-            border-radius: 50px;
-            color: #aaa;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-
-        .btn-volver:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-        }
+        /* ========== CONFIGURACIÓN ========== */
+        #configuracion { display: none; padding: 20px; }
+        #configuracion h2 { color: #ffd700; text-align: center; font-size: 2rem; margin-bottom: 20px; }
+        .config-row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 25px; }
+        .config-group { background: rgba(255,255,255,0.05); border-radius: 15px; padding: 15px 20px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+        .config-group label { color: #c8c8e8; font-weight: bold; }
+        .config-group select { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 8px 15px; color: white; font-size: 1rem; cursor: pointer; }
+        .config-group select option { background: #1a1a3e; color: white; }
+        .nombres-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 800px; margin: 20px auto; }
+        .nombre-item { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 12px 15px; display: flex; align-items: center; gap: 10px; }
+        .nombre-item .color-muestra { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); flex-shrink: 0; }
+        .nombre-item input { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 8px 12px; color: white; font-size: 1rem; width: 100%; transition: all 0.3s; }
+        .nombre-item input:focus { outline: none; border-color: #ffd700; background: rgba(255,255,255,0.12); }
+        .nombre-item input::placeholder { color: #888; font-style: italic; }
+        .btn-iniciar { background: linear-gradient(45deg, #00b894, #00cec9); border: none; padding: 15px 50px; font-size: 1.3rem; font-weight: bold; color: white; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 25px rgba(0,206,201,0.3); display: block; margin: 25px auto 0; }
+        .btn-iniciar:hover { transform: scale(1.05); box-shadow: 0 12px 35px rgba(0,206,201,0.5); }
+        .btn-volver { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 10px 25px; border-radius: 50px; color: #aaa; cursor: pointer; transition: all 0.3s; font-size: 0.9rem; }
+        .btn-volver:hover { background: rgba(255,255,255,0.15); color: white; }
 
         /* ========== PANTALLA DE JUEGO ========== */
-        #juego {
-            display: none;
-        }
+        #juego { display: none; }
+        .game-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid rgba(255,255,255,0.1); }
+        .game-title { color: #ffd700; font-size: 1.8rem; font-weight: bold; }
+        .game-controls { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
+        .btn-dado { background: linear-gradient(135deg, #667eea, #764ba2); border: none; padding: 12px 25px; border-radius: 50px; color: white; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 10px; }
+        .btn-dado:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(102,126,234,0.4); }
+        .btn-dado:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .dado-resultado { background: rgba(255,255,255,0.15); border-radius: 15px; padding: 10px 25px; font-size: 2.5rem; font-weight: bold; color: #ffd700; min-width: 60px; text-align: center; }
 
-        .game-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .game-title {
-            color: #ffd700;
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-
-        .game-controls {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-dado {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            color: white;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-dado:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-dado:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .dado-resultado {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 15px;
-            padding: 10px 25px;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #ffd700;
-            min-width: 60px;
-            text-align: center;
-        }
-
-        /* Tags de jugadores */
-        .players-panel {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .player-tag {
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid transparent;
-            color: white;
-        }
-
-        .player-tag.active {
-            border-color: #ffd700;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-        }
-
-        .player-tag .color-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            display: inline-block;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
+        /* ========== TAGS DE JUGADORES (MEJORADOS CON PUNTOS) ========== */
+        .players-panel { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+        .player-tag { padding: 8px 18px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); border: 2px solid transparent; color: white; }
+        .player-tag.active { border-color: #ffd700; box-shadow: 0 0 20px rgba(255,215,0,0.3); }
+        .player-tag .color-dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; border: 1px solid rgba(255,255,255,0.3); }
+        .player-tag .puntos-tag { background: rgba(0,0,0,0.3); border-radius: 12px; padding: 0 10px; font-size: 0.8rem; color: #ffd700; }
 
         /* ========== TABLERO ========== */
-        .game-main {
-            display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
-
-        .tablero {
-            flex: 2;
-            min-width: 350px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 20px;
-            position: relative;
-        }
-
-        .tablero-grid {
-            display: grid;
-            grid-template-columns: repeat(10, 1fr);
-            gap: 6px;
-        }
-
-        .casilla {
-            aspect-ratio: 1/1;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-size: 0.65rem;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            text-align: center;
-            padding: 2px;
-            min-height: 50px;
-        }
-
-        .casilla .numero {
-            font-size: 0.7rem;
-            opacity: 0.7;
-        }
-        .casilla .icono {
-            font-size: 1.2rem;
-        }
-        .casilla .label {
-            font-size: 0.5rem;
-            opacity: 0.8;
-            line-height: 1.1;
-        }
-        .casilla:hover {
-            transform: scale(1.05);
-            z-index: 10;
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
-        }
-
-        .casilla .fichas-container {
-            position: absolute;
-            bottom: -5px;
-            right: -5px;
-            display: flex;
-            gap: 2px;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-            max-width: 80%;
-        }
-
-        .casilla .ficha-mini {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            border: 2px solid white;
-            font-size: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
+        .game-main { display: flex; gap: 25px; flex-wrap: wrap; }
+        .tablero { flex: 2; min-width: 350px; background: rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; position: relative; }
+        .tablero-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; }
+        .casilla { aspect-ratio: 1/1; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 0.65rem; font-weight: bold; color: white; cursor: pointer; transition: all 0.3s; position: relative; text-align: center; padding: 2px; min-height: 50px; }
+        .casilla .numero { font-size: 0.7rem; opacity: 0.7; }
+        .casilla .icono { font-size: 1.2rem; }
+        .casilla .label { font-size: 0.5rem; opacity: 0.8; line-height: 1.1; }
+        .casilla:hover { transform: scale(1.05); z-index: 10; box-shadow: 0 0 25px rgba(255,255,255,0.2); }
+        .casilla .fichas-container { position: absolute; bottom: -5px; right: -5px; display: flex; gap: 2px; flex-wrap: wrap; justify-content: flex-end; max-width: 80%; }
+        .casilla .ficha-mini { width: 16px; height: 16px; border-radius: 50%; border: 2px solid white; font-size: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
 
         /* Colores de categorías */
         .categoria-verde   { background: #2e7d32; }
@@ -433,200 +82,41 @@
         .categoria-salida  { background: linear-gradient(135deg, #00bcd4, #0097a7); }
 
         /* ========== PANEL LATERAL ========== */
-        .panel-lateral {
-            flex: 1;
-            min-width: 280px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+        .panel-lateral { flex: 1; min-width: 280px; display: flex; flex-direction: column; gap: 15px; }
+        .reto-actual { background: rgba(255,255,255,0.08); border-radius: 20px; padding: 20px; min-height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; transition: all 0.5s; }
+        .reto-actual .reto-categoria { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #aaa; margin-bottom: 5px; }
+        .reto-actual .reto-titulo { font-size: 1.5rem; font-weight: bold; color: #ffd700; margin-bottom: 10px; }
+        .reto-actual .reto-texto { color: #e0e0ff; font-size: 1.1rem; line-height: 1.6; }
 
-        .reto-actual {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 20px;
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            transition: all 0.5s;
-        }
+        /* ========== MARCADOR MEJORADO ========== */
+        .marcador { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 15px 20px; }
+        .marcador h3 { color: #ffd700; margin-bottom: 10px; font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; display: flex; justify-content: space-between; align-items: center; }
+        .marcador h3 .total-puntos { font-size: 0.8rem; color: #aaa; }
+        .marcador table { width: 100%; border-collapse: collapse; }
+        .marcador th { color: #888; font-weight: normal; font-size: 0.7rem; text-transform: uppercase; padding: 5px 3px; text-align: left; }
+        .marcador td { color: #e0e0ff; padding: 6px 3px; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .marcador .puntos { font-weight: bold; color: #ffd700; text-align: right; }
+        .marcador .posicion { text-align: center; color: #888; font-size: 0.7rem; }
 
-        .reto-actual .reto-categoria {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #aaa;
-            margin-bottom: 5px;
-        }
-        .reto-actual .reto-titulo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ffd700;
-            margin-bottom: 10px;
-        }
-        .reto-actual .reto-texto {
-            color: #e0e0ff;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
-        .marcador {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 15px 20px;
-        }
-
-        .marcador h3 {
-            color: #ffd700;
-            margin-bottom: 10px;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .marcador table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .marcador th {
-            color: #888;
-            font-weight: normal;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            padding: 5px 3px;
-            text-align: left;
-        }
-
-        .marcador td {
-            color: #e0e0ff;
-            padding: 6px 3px;
-            font-size: 0.9rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .marcador .puntos {
-            font-weight: bold;
-            color: #ffd700;
-            text-align: right;
-        }
-
-        .btn-menu {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 10px 20px;
-            color: #aaa;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-        .btn-menu:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-        }
+        .btn-menu { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 20px; color: #aaa; cursor: pointer; transition: all 0.3s; font-size: 0.9rem; }
+        .btn-menu:hover { background: rgba(255,255,255,0.15); color: white; }
 
         /* ========== MODALES ========== */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            background: linear-gradient(135deg, #1a1a3e, #2d2b6e);
-            border-radius: 30px;
-            padding: 40px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
-            animation: modalIn 0.3s ease;
-        }
-
-        @keyframes modalIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to   { transform: scale(1); opacity: 1; }
-        }
-
-        .modal .modal-titulo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #ffd700;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .modal .modal-categoria {
-            text-align: center;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #aaa;
-            margin-bottom: 5px;
-        }
-        .modal .modal-texto {
-            color: #e0e0ff;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            text-align: center;
-            padding: 20px 0;
-        }
-        .modal .modal-tiempo {
-            text-align: center;
-            color: #ff6b6b;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        .modal .modal-puntos {
-            text-align: center;
-            color: #69db7c;
-            margin: 10px 0 20px;
-        }
-        .modal .modal-botones {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .modal .btn-modal {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1rem;
-        }
-
-        .btn-modal-primario {
-            background: linear-gradient(45deg, #f7971e, #ffd200);
-            color: #1a1a3e;
-        }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: linear-gradient(135deg, #1a1a3e, #2d2b6e); border-radius: 30px; padding: 40px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; border: 1px solid rgba(255,215,0,0.2); box-shadow: 0 30px 60px rgba(0,0,0,0.8); animation: modalIn 0.3s ease; }
+        @keyframes modalIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal .modal-titulo { font-size: 1.8rem; font-weight: bold; color: #ffd700; margin-bottom: 15px; text-align: center; }
+        .modal .modal-categoria { text-align: center; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: #aaa; margin-bottom: 5px; }
+        .modal .modal-texto { color: #e0e0ff; font-size: 1.2rem; line-height: 1.8; text-align: center; padding: 20px 0; }
+        .modal .modal-tiempo { text-align: center; color: #ff6b6b; font-weight: bold; font-size: 1.1rem; }
+        .modal .modal-puntos { text-align: center; color: #69db7c; margin: 10px 0 20px; }
+        .modal .modal-botones { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .modal .btn-modal { padding: 12px 30px; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; transition: all 0.3s; font-size: 1rem; }
+        .btn-modal-primario { background: linear-gradient(45deg, #f7971e, #ffd200); color: #1a1a3e; }
         .btn-modal-primario:hover { transform: scale(1.05); }
-
-        .btn-modal-secundario {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .btn-modal-secundario:hover { background: rgba(255, 255, 255, 0.2); }
+        .btn-modal-secundario { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
+        .btn-modal-secundario:hover { background: rgba(255,255,255,0.2); }
 
         /* ========== RESPONSIVE ========== */
         @media (max-width: 768px) {
@@ -643,7 +133,6 @@
             .modal .modal-texto { font-size: 1rem; }
             .nombres-container { grid-template-columns: 1fr; }
         }
-
         @media (max-width: 480px) {
             .game-container { padding: 10px; }
             .tablero-grid { gap: 3px; }
@@ -653,7 +142,6 @@
             .btn-dado { padding: 8px 15px; font-size: 0.9rem; }
             .game-controls { gap: 8px; }
         }
-
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: #ffd700; border-radius: 10px; }
@@ -714,7 +202,7 @@
             </div>
         </div>
 
-        <!-- Tags de jugadores -->
+        <!-- Tags de jugadores con puntos -->
         <div class="players-panel" id="playersPanel"></div>
 
         <!-- Contenido principal -->
@@ -729,10 +217,13 @@
                     <div class="reto-texto">Haz clic en "Lanzar Dado" para comenzar tu turno.</div>
                 </div>
                 <div class="marcador">
-                    <h3>⭐ Destellos Creativos</h3>
+                    <h3>
+                        ⭐ Destellos Creativos
+                        <span class="total-puntos" id="totalPuntos">Total: 0 ⭐</span>
+                    </h3>
                     <div id="marcadorContenido">
                         <table>
-                            <thead><tr><th>Jugador</th><th style="text-align:right;">Puntos</th></tr></thead>
+                            <thead><tr><th>#</th><th>Jugador</th><th style="text-align:right;">Puntos</th></tr></thead>
                             <tbody id="marcadorBody"></tbody>
                         </table>
                     </div>
@@ -814,10 +305,6 @@
         salida: { nombre: 'SALIDA', color: '#0097a7', emoji: '🚀' },
     };
 
-    // ================================================================
-    //                      BANCO DE RETOS
-    // ================================================================
-
     const RETOS = {
         verde: [
             'Nombra todos los usos que se te ocurran para un clip metálico.',
@@ -869,10 +356,6 @@
         relampago: '¡Reto Relámpago! Tienes 30 segundos para responder. Si lo logras, ¡doblas tus puntos! ⏳'
     };
 
-    // ================================================================
-    //                      CONFIGURACIÓN DEL TABLERO
-    // ================================================================
-
     const CASILLAS = [
         { tipo: 'salida', categoria: null, numero: 0, icono: '🚀', label: 'SALIDA' },
         { tipo: 'reto', categoria: 'verde', numero: 1, icono: '🟢', label: 'V' },
@@ -914,7 +397,6 @@
     let numJugadores = 4;
     let turnoActual = 0;
     let faseJuego = 'inicio';
-    let dadoLanzado = false;
     let juegoTerminado = false;
     let retosUsados = {
         verde: [], azul: [], amarillo: [], morado: [], rojo: [], naranja: []
@@ -971,21 +453,15 @@
     function iniciarJuegoConNombres() {
         const nombres = [];
         const inputs = document.querySelectorAll('#nombresContainer input');
-        let vacio = false;
         inputs.forEach((inp, i) => {
             let val = inp.value.trim();
-            if (val === '') {
-                val = 'Jugador ' + (i+1);
-                inp.value = val;
-            }
+            if (val === '') val = 'Jugador ' + (i+1);
             nombres.push(val);
         });
 
-        // Ocultar configuración y mostrar juego
         document.getElementById('configuracion').style.display = 'none';
         document.getElementById('juego').style.display = 'block';
 
-        // Inicializar jugadores con los nombres ingresados
         jugadores = [];
         for (let i = 0; i < nombres.length; i++) {
             jugadores.push({
@@ -1001,7 +477,6 @@
         turnoActual = 0;
         faseJuego = 'dado';
         juegoTerminado = false;
-        dadoLanzado = false;
         retosUsados = {
             verde: [], azul: [], amarillo: [], morado: [], rojo: [], naranja: []
         };
@@ -1016,7 +491,6 @@
 
     function reiniciarPartida() {
         document.getElementById('modalVictoria').classList.remove('active');
-        // Volver a configuración para cambiar nombres
         document.getElementById('juego').style.display = 'none';
         document.getElementById('configuracion').style.display = 'block';
         generarInputsNombres();
@@ -1326,25 +800,37 @@
     }
 
     // ================================================================
-    //                      MARCADOR Y PANEL
+    //                      MARCADOR MEJORADO
     // ================================================================
 
     function actualizarMarcador() {
         const tbody = document.getElementById('marcadorBody');
         tbody.innerHTML = '';
-        jugadores.forEach((j, i) => {
+        // Ordenar por puntos (de mayor a menor) para mostrar ranking
+        const sorted = [...jugadores].sort((a, b) => b.puntos - a.puntos);
+        sorted.forEach((j, i) => {
             const tr = document.createElement('tr');
+            const medalla = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1);
             tr.innerHTML = `
+                <td class="posicion">${medalla}</td>
                 <td style="display:flex;align-items:center;gap:8px;">
                     <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${j.color};"></span>
                     ${j.nombre}
-                    ${i === turnoActual ? ' 👈' : ''}
+                    ${j === jugadores[turnoActual] ? ' 👈' : ''}
                 </td>
                 <td class="puntos">${j.puntos} ⭐</td>
             `;
             tbody.appendChild(tr);
         });
+
+        // Actualizar total de puntos
+        const total = jugadores.reduce((sum, j) => sum + j.puntos, 0);
+        document.getElementById('totalPuntos').textContent = `Total: ${total} ⭐`;
     }
+
+    // ================================================================
+    //                      PANEL DE JUGADORES (CON PUNTOS)
+    // ================================================================
 
     function actualizarPanelJugadores() {
         const panel = document.getElementById('playersPanel');
@@ -1357,6 +843,9 @@
             tag.innerHTML = `
                 <span class="color-dot" style="background:${j.color};"></span>
                 ${j.nombre}
+                <span style="background:rgba(0,0,0,0.3);border-radius:12px;padding:0 8px;font-size:0.8rem;color:#ffd700;">
+                    ${j.puntos}⭐
+                </span>
                 <span style="background:${j.color};border-radius:50%;padding:0 6px;font-size:0.7rem;color:#fff;">
                     ${j.posicion}
                 </span>
